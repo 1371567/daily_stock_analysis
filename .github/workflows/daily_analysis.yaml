@@ -1,0 +1,19 @@
+name: Daily Stock Analysis
+on:
+  schedule:
+    - cron: '0 10 * * 1-5' # 工作日10:00 UTC时间（对应北京时间18:00）
+  workflow_dispatch: # 允许手动触发
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # 检出代码
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4 # 设置Python环境
+        with: # 注意这里：必须比上面的 uses 多 2 个空格
+          python-version: '3.10' # 注意这里：必须比 with 多 2 个空格
+      
+      - run: pip install -r requirements.txt # 安装依赖
+      
+      - run: python main.py # 运行主程序（假设主程序为main.py）
